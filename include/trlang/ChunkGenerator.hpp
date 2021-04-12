@@ -9,10 +9,10 @@
 
 namespace trl
 {
-/**
- * A generator for a chunk of data.
- * @tparam T Type of the data being generated
- */
+    /**
+     * A generator for a chunk of data.
+     * @tparam T Type of the data being generated.
+     */
     template<class T>
     class ChunkGenerator
     {
