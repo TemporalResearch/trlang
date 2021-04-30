@@ -10,7 +10,7 @@ JSON Object() {
     return std::move( JSON::Make( JSON::Class::Object ) );
 }
 
-std::ostream& json::operator<<( std::ostream &os, const JSON &json ) {
+std::ostream& trl::json::operator<<( std::ostream &os, const JSON &json ) {
     os << json.dump();
     return os;
 }
