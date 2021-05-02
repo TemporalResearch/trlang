@@ -3,7 +3,9 @@ if (NOT TARGET trlang_src_module)
             trlang.hpp
             trlang/ChunkGenerator.hpp
             trlang/Enum.hpp
-            trlang/vector.hpp ../src/trlang/Curl.cpp trlang/Curl.hpp trlang/json.hpp ../src/trlang/json.cpp)
+            trlang/vector.hpp ../src/trlang/Curl.cpp trlang/Curl.hpp trlang/json.hpp ../src/trlang/json.cpp
+            trlang/functional/ptr_less.hpp trlang/functional.hpp
+            trlang/functional/ptr_greater.hpp)
 
     target_include_directories(trlang_src_module
             PUBLIC ./)
