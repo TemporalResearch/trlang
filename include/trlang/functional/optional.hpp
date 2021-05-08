@@ -18,7 +18,11 @@ namespace trl
         optional(const T& value):
             _value(std::make_optional(value))
         {
+        }
 
+        optional(const T&& value):
+            _value(std::make_optional(value))
+        {
         }
 
         optional(const std::optional<T>& value):
@@ -30,7 +34,6 @@ namespace trl
         optional():
             _value(std::nullopt)
         {
-
         }
 
         const T* operator->() const
@@ -55,9 +58,9 @@ namespace trl
         }
 
         template<class U>
-        const trl::optional<T>& operator +(const U& other) const
+        trl::optional<T> operator +(const U& other) const
         {
-            if (_value)
+            if (has_value())
             {
                 return optional(_value.value() + other);
             }
@@ -67,10 +70,11 @@ namespace trl
             }
         }
 
+
         template<class U>
-        const trl::optional<T>& operator -(const U& other) const
+        trl::optional<T> operator -(const U& other) const
         {
-            if (_value)
+            if (has_value())
             {
                 return optional(_value.value() - other);
             }
@@ -81,11 +85,11 @@ namespace trl
         }
 
         template<class U>
-        const trl::optional<T>& operator *(const U& other) const
+        trl::optional<T> operator *(const U& other) const
         {
-            if (_value)
+            if (has_value())
             {
-                return optional(_value.value() - other);
+                return optional(_value.value() * other);
             }
             else
             {
@@ -94,11 +98,11 @@ namespace trl
         }
 
         template<class U>
-        const trl::optional<T>& operator /(const U& other) const
+        trl::optional<T> operator /(const U& other) const
         {
-            if (_value)
+            if (has_value())
             {
-                return optional(_value.value() - other);
+                return optional(_value.value() / other);
             }
             else
             {

@@ -30,7 +30,7 @@ TEST_SUITE(OptionalTests)
         ASSERT_EQUALS(opt.value(), value);
     }
 
-    IGNORE_TEST(3, shouldAllowOperatorPassThrough)
+    TEST(3, shouldAllowOperatorPassThrough)
     {
         int value = 5;
         trl::optional<int> opt(value);
