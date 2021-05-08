@@ -13,27 +13,73 @@ namespace trl
     class optional
     {
     private:
-        std::optional<T> _value;
+        T* _value;
     public:
         optional(const T& value):
-            _value(std::make_optional(value))
+            _value(new T(value))
         {
         }
 
         optional(const T&& value):
-            _value(std::make_optional(value))
+            _value(new T(value))
         {
         }
 
         optional(const std::optional<T>& value):
-            _value(value)
+            _value(nullptr)
         {
-
+            if (value.has_value())
+            {
+                _value = new T(value.value());
+            }
         }
 
         optional():
-            _value(std::nullopt)
+            _value(nullptr)
         {
+        }
+
+        ~optional()
+        {
+            if (_value != nullptr) delete _value;
+        }
+
+        optional<T> &operator=(const T& value)
+        {
+            if (_value != nullptr) delete _value;
+            _value = new T(value);
+
+            return *this;
+        }
+
+        optional<T> &operator=(const optional<T>& otherOpt)
+        {
+            if (otherOpt.has_value())
+            {
+                this->operator=(otherOpt.value());
+            }
+            else
+            {
+                delete _value;
+                _value = nullptr;
+            }
+
+            return *this;
+        }
+
+        optional<T> &operator=(const std::optional<T> &stdOpt)
+        {
+            if (stdOpt.has_value())
+            {
+                this->operator=(stdOpt.value());
+            }
+            else
+            {
+                delete _value;
+                _value = nullptr;
+            }
+
+            return *this;
         }
 
         const T* operator->() const
@@ -43,18 +89,18 @@ namespace trl
 
         const T& value() const
         {
-            return _value.value();
+            return *_value;
         }
 
         [[nodiscard]] bool has_value() const
         {
-            return _value.has_value();
+            return _value != nullptr;
         }
 
         template<class U>
         explicit operator U() const
         {
-            return static_cast<U>(_value.value());
+            return static_cast<U>(*_value);
         }
 
         template<class U>
@@ -62,7 +108,7 @@ namespace trl
         {
             if (has_value())
             {
-                return optional(_value.value() + other);
+                return optional((*_value) + other);
             }
             else
             {
@@ -76,7 +122,7 @@ namespace trl
         {
             if (has_value())
             {
-                return optional(_value.value() - other);
+                return optional((*_value) - other);
             }
             else
             {
@@ -89,7 +135,7 @@ namespace trl
         {
             if (has_value())
             {
-                return optional(_value.value() * other);
+                return optional((*_value) * other);
             }
             else
             {
@@ -102,7 +148,7 @@ namespace trl
         {
             if (has_value())
             {
-                return optional(_value.value() / other);
+                return optional((*_value) / other);
             }
             else
             {
@@ -110,8 +156,7 @@ namespace trl
             }
         }
 
-        template<class U>
-        friend bool operator==(const trl::optional<U>& a, const trl::optional<U>& b)
+        friend bool operator==(const trl::optional<T>& a, const trl::optional<T>& b)
         {
             if (!(a.has_value() || b.has_value()))
             {
@@ -123,12 +168,11 @@ namespace trl
             }
             else
             {
-                return a._value.value() == a._value.value();
+                return *(a._value) == *(a._value);
             }
         }
 
-        template<class U>
-        friend bool operator<(const trl::optional<U>& a, const trl::optional<U>& b)
+        friend bool operator<(const trl::optional<T>& a, const trl::optional<T>& b)
         {
             if (!(a.has_value() || b.has_value()))
             {
@@ -144,24 +188,21 @@ namespace trl
             }
             else
             {
-                return a._value.value() < b._value.value();
+                return *(a._value) < *(b._value);
             }
         }
 
-        template<class U>
-        friend bool operator>(const trl::optional<U>& a, const trl::optional<U>& b)
+        friend bool operator>(const trl::optional<T>& a, const trl::optional<T>& b)
         {
             return b < a;
         }
 
-        template<class U>
-        friend bool operator<=(const trl::optional<U>& a, const trl::optional<U>& b)
+        friend bool operator<=(const trl::optional<T>& a, const trl::optional<T>& b)
         {
             return !(b < a);
         }
 
-        template<class U>
-        friend bool operator>=(const trl::optional<U>& a, const trl::optional<U>& b)
+        friend bool operator>=(const trl::optional<T>& a, const trl::optional<T>& b)
         {
             return !(a < b);
         }

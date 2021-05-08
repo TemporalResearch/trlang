@@ -82,4 +82,31 @@ TEST_SUITE(OptionalTests)
         trl::optional<int> filled = 5;
         ASSERT_EQUALS(auto_test::to_string(filled), "trl::opt(5)");
     }
+
+    class Destructable
+    {
+    private:
+        bool& isAlive;
+    public:
+        Destructable(bool& aliveFlag):
+            isAlive(aliveFlag)
+        {
+            isAlive = true;
+        }
+
+        ~Destructable()
+        {
+            isAlive = false;
+        }
+    };
+
+    TEST(3, shouldDestroyOldContentsWhenGivenNewValue)
+    {
+        bool isAlive = true;
+        trl::optional<Destructable> opt = Destructable(isAlive);
+
+        opt = std::nullopt;
+
+        ASSERT_FALSE(isAlive);
+    }
 }
