@@ -25,6 +25,15 @@ namespace trl
         {
         }
 
+        optional(const trl::optional<T> & other):
+            _value(nullptr)
+        {
+            if (other.has_value())
+            {
+                _value = new T(other.value());
+            }
+        }
+
         optional(const std::optional<T>& value):
             _value(nullptr)
         {
@@ -42,6 +51,7 @@ namespace trl
         ~optional()
         {
             if (_value != nullptr) delete _value;
+            _value = nullptr;
         }
 
         optional<T> &operator=(const T& value)
@@ -84,7 +94,7 @@ namespace trl
 
         const T* operator->() const
         {
-            return _value.operator->();
+            return _value;
         }
 
         const T& value() const

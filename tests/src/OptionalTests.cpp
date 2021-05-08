@@ -109,4 +109,40 @@ TEST_SUITE(OptionalTests)
 
         ASSERT_FALSE(isAlive);
     }
+
+    struct InstantiationCounter
+    {
+        static int instantiationCounter;
+
+        InstantiationCounter()
+        {
+            instantiationCounter++;
+        }
+
+        InstantiationCounter(const InstantiationCounter& other):
+            InstantiationCounter()
+        {
+
+        }
+
+        static void resetCounter()
+        {
+            instantiationCounter = 0;
+        }
+    };
+
+    int InstantiationCounter::instantiationCounter = 0;
+
+    TEST(3, shouldCopyContentsOfOtherOptionalNotShare)
+    {
+        InstantiationCounter::resetCounter();
+        ASSERT_EQUALS(InstantiationCounter::instantiationCounter, 0);
+
+        trl::optional<InstantiationCounter> opt1 = InstantiationCounter();
+        // Extra stack object created in assignment
+        ASSERT_EQUALS(InstantiationCounter::instantiationCounter, 2);
+
+        trl::optional<InstantiationCounter> opt2 = opt1;
+        ASSERT_EQUALS(InstantiationCounter::instantiationCounter, 3);
+    }
 }
