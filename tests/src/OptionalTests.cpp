@@ -30,7 +30,7 @@ TEST_SUITE(OptionalTests)
         ASSERT_EQUALS(opt.value(), value);
     }
 
-    TEST(3, shouldAllowOperatorPassThrough)
+    IGNORE_TEST(3, shouldAllowOperatorPassThrough)
     {
         int value = 5;
         trl::optional<int> opt(value);
@@ -56,5 +56,30 @@ TEST_SUITE(OptionalTests)
         modifiedOpt = value + 5;
         ASSERT_TRUE(opt < modifiedOpt)
         ASSERT_TRUE(modifiedOpt > opt)
+    }
+
+    TEST(3, shouldMakeEmptyOptionalsEqual)
+    {
+        trl::optional<int> opt1;
+        trl::optional<int> opt2;
+
+        ASSERT_EQUALS(opt1, opt2)
+    }
+
+    TEST(3, shouldMakeEmptyOptionalLessThanFilled)
+    {
+        trl::optional<int> empty;
+        trl::optional<int> filled = 5;
+
+        ASSERT_TRUE(empty < filled)
+    }
+
+    TEST(3, shouldConvertToStringForAutoTestLibrary)
+    {
+        trl::optional<int> empty;
+        ASSERT_EQUALS(auto_test::to_string(empty), "trl::nullopt");
+
+        trl::optional<int> filled = 5;
+        ASSERT_EQUALS(auto_test::to_string(filled), "trl::opt(5)");
     }
 }

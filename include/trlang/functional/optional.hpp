@@ -109,11 +109,11 @@ namespace trl
         template<class U>
         friend bool operator==(const trl::optional<U>& a, const trl::optional<U>& b)
         {
-            if (!(a || b))
+            if (!(a.has_value() || b.has_value()))
             {
                 return true;
             }
-            else if (!(a && b))
+            else if (!(a.has_value() && b.has_value()))
             {
                 return false;
             }
@@ -126,15 +126,15 @@ namespace trl
         template<class U>
         friend bool operator<(const trl::optional<U>& a, const trl::optional<U>& b)
         {
-            if (!(a || b))
+            if (!(a.has_value() || b.has_value()))
             {
                 return false;
             }
-            else if (!a && b)
+            else if (!a.has_value() && b.has_value())
             {
                 return true;
             }
-            else if (a && !b)
+            else if (a.has_value() && !b.has_value())
             {
                 return false;
             }
