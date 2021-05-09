@@ -6,6 +6,7 @@
 #define AUTO_HARMONY_OPTIONAL_HPP
 
 #include <optional>
+#include <functional>
 
 namespace trl
 {
@@ -105,6 +106,19 @@ namespace trl
         [[nodiscard]] bool has_value() const
         {
             return _value != nullptr;
+        }
+
+        template<class U>
+        trl::optional<U> map(std::function<U(const T&)> fn)
+        {
+            if (has_value())
+            {
+                return trl::optional(fn(*_value));
+            }
+            else
+            {
+                return trl::optional<U>();
+            }
         }
 
         template<class U>

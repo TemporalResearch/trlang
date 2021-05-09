@@ -146,4 +146,31 @@ TEST_SUITE(OptionalTests)
         trl::optional<InstantiationCounter> opt2 = opt1;
         ASSERT_EQUALS(InstantiationCounter::instantiationCounter, 3);
     }
+
+    TEST(3, shouldMapFromOneTypeToAnother)
+    {
+        int value = 5;
+        trl::optional<int> opt = value;
+        trl::optional<double> dOpt = opt.map<double>([&](auto i) {
+            double dValue = i + 0.5;
+
+            return dValue;
+        });
+
+        ASSERT_TRUE(dOpt > 5);
+        ASSERT_TRUE(dOpt < 6);
+    }
+
+    TEST(3, shouldMapTypeOfEmpty)
+    {
+        trl::optional<int> opt;
+        trl::optional<double> dOpt = opt.map<double>([&](auto i) {
+            double dValue = i + 0.5;
+
+            return dValue;
+        });
+
+        ASSERT_FALSE(opt.has_value());
+        ASSERT_FALSE(dOpt.has_value());
+    }
 }
