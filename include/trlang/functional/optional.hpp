@@ -122,6 +122,19 @@ namespace trl
         }
 
         template<class U>
+        trl::optional<U> flatMap(std::function<trl::optional<U>(const T&)> fn)
+        {
+            if (has_value())
+            {
+                return fn(*_value);
+            }
+            else
+            {
+                return trl::optional<U>();
+            }
+        }
+
+        template<class U>
         explicit operator U() const
         {
             return static_cast<U>(*_value);

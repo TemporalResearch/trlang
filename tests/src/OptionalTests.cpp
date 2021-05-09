@@ -164,13 +164,34 @@ TEST_SUITE(OptionalTests)
     TEST(3, shouldMapTypeOfEmpty)
     {
         trl::optional<int> opt;
-        trl::optional<double> dOpt = opt.map<double>([&](auto i) {
-            double dValue = i + 0.5;
-
-            return dValue;
+        trl::optional<std::string> dOpt = opt.map<std::string>([&](auto i) {
+            return "Hello world";
         });
 
         ASSERT_FALSE(opt.has_value());
         ASSERT_FALSE(dOpt.has_value());
+    }
+
+    TEST(3, shouldFlatMapFromOneTypeToAnotherEmptyType)
+    {
+        int value = 5;
+        trl::optional<int> opt = value;
+        trl::optional<double> dOpt = opt.flatMap<double>([&](auto i) {
+            return trl::optional<double>();
+        });
+
+        ASSERT_FALSE(dOpt.has_value());
+    }
+
+    TEST(3, shouldFlatMapFromOneTypeToAnotherType)
+    {
+        int value = 5;
+        trl::optional<int> opt = value;
+        trl::optional<std::string> dOpt = opt.flatMap<std::string>([&](auto i) {
+            trl::optional<std::string> dVal = std::string(i, '#');
+            return dVal;
+        });
+
+        ASSERT_EQUALS(dOpt.value().size(), value);
     }
 }
