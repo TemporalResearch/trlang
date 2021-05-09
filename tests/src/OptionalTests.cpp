@@ -54,6 +54,7 @@ TEST_SUITE(OptionalTests)
         ASSERT_TRUE(opt >= modifiedOpt)
 
         modifiedOpt = value + 5;
+        ASSERT_TRUE(modifiedOpt != opt);
         ASSERT_TRUE(opt < modifiedOpt)
         ASSERT_TRUE(modifiedOpt > opt)
     }

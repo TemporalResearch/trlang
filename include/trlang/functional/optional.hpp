@@ -178,8 +178,13 @@ namespace trl
             }
             else
             {
-                return *(a._value) == *(a._value);
+                return *(a._value) == *(b._value);
             }
+        }
+
+        friend bool operator!=(const trl::optional<T>& a, const trl::optional<T>& b)
+        {
+            return !(a == b);
         }
 
         friend bool operator<(const trl::optional<T>& a, const trl::optional<T>& b)
