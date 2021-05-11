@@ -7,6 +7,7 @@
 
 #include <optional>
 #include <functional>
+#include <stdexcept>
 
 namespace trl
 {
@@ -93,14 +94,16 @@ namespace trl
             return *this;
         }
 
-        const T* operator->() const
-        {
-            return _value;
-        }
-
         const T& value() const
         {
-            return *_value;
+            if (has_value())
+            {
+                return *_value;
+            }
+            else
+            {
+                throw std::runtime_error("trl::optional value was not present");
+            }
         }
 
         [[nodiscard]] bool has_value() const
@@ -109,7 +112,7 @@ namespace trl
         }
 
         template<class U>
-        trl::optional<U> map(std::function<U(const T&)> fn)
+        trl::optional<U> map(std::function<U(const T&)> fn) const
         {
             if (has_value())
             {
@@ -122,7 +125,7 @@ namespace trl
         }
 
         template<class U>
-        trl::optional<U> flatMap(std::function<trl::optional<U>(const T&)> fn)
+        trl::optional<U> flatMap(std::function<trl::optional<U>(const T&)> fn) const
         {
             if (has_value())
             {
