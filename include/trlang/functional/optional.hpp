@@ -137,6 +137,14 @@ namespace trl
             }
         }
 
+        void forEach(std::function<void(const T&)> fn) const
+        {
+            if (has_value())
+            {
+                fn(*_value);
+            }
+        }
+
         template<class U>
         explicit operator U() const
         {

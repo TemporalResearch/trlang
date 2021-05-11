@@ -194,4 +194,17 @@ TEST_SUITE(OptionalTests)
 
         ASSERT_EQUALS(dOpt.value().size(), value);
     }
+
+    TEST(3, shouldRunForEachFunction)
+    {
+        int value = 5;
+        int otherNumber = 0;
+
+        trl::optional<int> opt = value;
+        opt.forEach([&otherNumber](auto i) {
+            otherNumber = i;
+        });
+
+        ASSERT_EQUALS(otherNumber, value);
+    }
 }
