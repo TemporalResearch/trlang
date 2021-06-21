@@ -1,5 +1,6 @@
 add_executable(trl_tests src/test_runner.cpp
-        src/OptionalTests.cpp)
+        src/OptionalTests.cpp
+        src/ScopedTimerTests.cpp)
 
 find_package(libautotest REQUIRED)
 

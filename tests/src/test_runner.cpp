@@ -5,6 +5,7 @@
 #include <auto_test.hpp>
 
 RUN_SUITE(OptionalTests);
+RUN_SUITE(ScopedTimerTests);
 
 int main()
 {
