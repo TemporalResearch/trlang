@@ -2,6 +2,7 @@ add_executable(trl_tests
         src/OptionalTests.cpp
         src/ScopedTimerTests.cpp src/main.cpp
         src/hfn/FunctorTests.cpp
+        src/hfn/ApplicativeTests.cpp
         )
 
 find_package(libautotest REQUIRED)

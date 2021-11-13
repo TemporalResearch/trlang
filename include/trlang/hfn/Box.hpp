@@ -2,7 +2,7 @@
 // Created by Michael Lynch on 13/11/2021.
 //
 
-#include "Functor_c.hpp"
+#include "Applicative_c.hpp"
 
 namespace hfn
 {
@@ -22,14 +22,31 @@ namespace hfn
             return val_;
         }
 
+
+        // Functor
+
         template<class V>
         Box<V> map(std::function<V(T)> fn)
         {
             return Box<V>(fn(val_));
+        }
+
+
+        //Applicative
+
+        static Box<T> pure(T val)
+        {
+            return Box<T>(val);
+        }
+
+        template<class V>
+        Box<V> seqApp(std::function<V(T)> fn)
+        {
+            return map(fn);
         }
     private:
         T val_;
     };
 }
 
-static_assert(hfn::Functor_c<hfn::Box, int, std::string>);
+static_assert(hfn::Applicative_c<hfn::Box, int, std::string>);
