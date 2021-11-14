@@ -8,8 +8,8 @@
 
 namespace hfn
 {
-    template<template <class> class T, class A, class B>
-    concept Functor_c = requires (T<A> a, T<B> b, std::function<B(A)> f)
+    template<template <class...> class T, class A, class B, class... Args>
+    concept Functor_c = requires (T<Args..., A> a, T<Args..., B> b, std::function<B(A)> f)
     {
         { b = a.map(f) };
     };

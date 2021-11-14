@@ -9,9 +9,9 @@
 namespace hfn
 {
     // (>>) :: forall a b. m a -> m b -> m b
-    template<template <class> class T, class A, class B>
-            requires Monad_c<T, A, B>
-    T<B> seq(T<A> a, T<B> b)
+    template<template <class...> class T, class A, class B, class... Args>
+            requires Monad_c<T, A, B, Args...>
+    T<Args..., B> seq(T<Args..., A> a, T<Args..., B> b)
     {
         return a.template flatMap<B>([&b](auto _) {
             return b;

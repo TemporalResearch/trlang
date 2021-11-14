@@ -6,13 +6,24 @@
 #include <trlang/hfn/Prelude.hpp>
 
 #include <trlang/hfn/Box.hpp>
+#include <trlang/hfn/DoubleBox.hpp>
 
 TEST_CASE("shouldSequenceToNextValue", "[Prelude][i6]")
 {
     hfn::Box<int> b(10);
     hfn::Box<std::string> c("Hello world");
 
-    auto cAgain = hfn::seq(b, c);
+    auto cAgain = hfn::seq<hfn::Box, int, std::string>(b, c);
+
+    REQUIRE(cAgain == c);
+}
+
+TEST_CASE("shouldSequenceToNextValueOnDoubleBox", "[Prelude][i6]")
+{
+    hfn::DoubleBox<std::string, int> b(10);
+    hfn::DoubleBox<std::string, std::string> c("Hello world");
+
+    auto cAgain = hfn::seq<hfn::DoubleBox, int, std::string, std::string>(b, c);
 
     REQUIRE(cAgain == c);
 }

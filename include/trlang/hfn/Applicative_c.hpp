@@ -9,12 +9,12 @@
 
 namespace hfn
 {
-    template<template <class> class T, class A, class B>
+    template<template <class...> class T, class A, class B, class... Args>
     concept Applicative_c =
-            hfn::Functor_c<T, A, B>
-            && requires (A a, T<A> aT, T<B> bT, std::function<B(A)> fn)
+            hfn::Functor_c<T, A, B, Args...>
+            && requires (A a, T<Args..., A> aT, T<Args..., B> bT, std::function<B(A)> fn)
             {
-                { aT = T<A>::pure(a) };
+                { aT = T<Args..., A>::pure(a) };
                 { bT = aT.seqApp(fn) };
             };
 }

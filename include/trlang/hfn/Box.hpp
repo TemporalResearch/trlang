@@ -45,6 +45,8 @@ namespace hfn
             return map(fn);
         }
 
+        // Monad
+
         template<class V>
         Box<V> flatMap(std::function<Box<V>(T)> fn)
         {
