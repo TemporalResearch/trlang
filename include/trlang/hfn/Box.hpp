@@ -2,7 +2,7 @@
 // Created by Michael Lynch on 13/11/2021.
 //
 
-#include "Applicative_c.hpp"
+#include "Monad_c.hpp"
 
 namespace hfn
 {
@@ -44,9 +44,15 @@ namespace hfn
         {
             return map(fn);
         }
+
+        template<class V>
+        Box<V> flatMap(std::function<Box<V>(T)> fn)
+        {
+            return fn(val_);
+        }
     private:
         T val_;
     };
 }
 
-static_assert(hfn::Applicative_c<hfn::Box, int, std::string>);
+static_assert(hfn::Monad_c<hfn::Box, int, std::string>);

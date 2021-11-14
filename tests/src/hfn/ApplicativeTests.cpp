@@ -6,7 +6,7 @@
 #include <trlang/hfn/Box.hpp>
 
 
-TEST_CASE("shouldProduceBox", "[Functor][i6]")
+TEST_CASE("shouldProduceBox", "[Applicative][i6]")
 {
     auto b = hfn::Box<int>::pure(10);
 
@@ -14,7 +14,7 @@ TEST_CASE("shouldProduceBox", "[Functor][i6]")
 //    static_assert(std::is_same_v<decltype(b), hfn::Box<int>>);
 }
 
-TEST_CASE("shouldApplyFunction", "[Functor][i6]")
+TEST_CASE("shouldApplyFunction", "[Applicative][i6]")
 {
     hfn::Box<int> b(10);
 
