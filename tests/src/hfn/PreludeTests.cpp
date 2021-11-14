@@ -16,3 +16,29 @@ TEST_CASE("shouldSequenceToNextValue", "[Prelude][i6]")
 
     REQUIRE(cAgain == c);
 }
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+TEST_CASE("shouldCurryOneArgument", "[Prelude][i6]")
+{
+    auto add10 = hfn::curry(add, 10);
+
+    REQUIRE(add10(20) == 30);
+}
+
+int addThree(int a, int b, int c)
+{
+    return a + b + c;
+}
+
+TEST_CASE("shouldCurryMultipleArgs", "[Prelude][i6]")
+{
+    auto add10 = hfn::curry(addThree, 10);
+    auto add20 = hfn::curry(add10, 10);
+
+    REQUIRE(add10(10, 10) == 30);
+    REQUIRE(add20(10) == 30);
+}

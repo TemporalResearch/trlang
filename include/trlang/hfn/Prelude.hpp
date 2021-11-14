@@ -17,4 +17,25 @@ namespace hfn
             return b;
         });
     }
+
+    template<class Function, class... Args>
+    struct curry
+    {
+    public:
+        explicit curry(Function fn, Args ...args)
+            : fn_(fn)
+            , args_(args...)
+        { }
+
+        template<class... FinalArgs>
+        auto operator ()(FinalArgs &&... finalArgs)
+        {
+            return std::apply([this, finalArgs...] (auto &&... firstArgs) {
+                return fn_(firstArgs..., finalArgs...);
+            }, args_);
+        }
+    private:
+        Function fn_;
+        std::tuple<Args...> args_;
+    };
 }
