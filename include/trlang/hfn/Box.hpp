@@ -50,6 +50,17 @@ namespace hfn
         {
             return fn(val_);
         }
+
+        friend bool operator==(const Box &lhs, const Box &rhs)
+        {
+            return lhs.val_ == rhs.val_;
+        }
+
+        friend bool operator!=(const Box &lhs, const Box &rhs)
+        {
+            return !(rhs == lhs);
+        }
+
     private:
         T val_;
     };
