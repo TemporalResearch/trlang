@@ -43,7 +43,7 @@ namespace trl::vector::functions
      * @brief Creates a vector of SuperType* containing the provided sub-type objects.
      * 
      * This function is to be used to allow for polymorphism in stack allocated objects.
-     * Polymorphism within C++ works with pointers, but not references making the use of 
+     * Polymorphism within C++ works with pointers (...what? that's not true), but not references making the use of
      * stack allocated objects in a polymorphic way complicated.
      * 
      * Ownership of the objects pointed to in the vector is not stolen and are never deleted.
