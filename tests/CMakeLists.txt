@@ -4,7 +4,9 @@ add_executable(trl_tests
         src/hfn/FunctorTests.cpp
         src/hfn/ApplicativeTests.cpp
         src/hfn/MonadTests.cpp
-        src/hfn/PreludeTests.cpp)
+        src/hfn/PreludeTests.cpp
+        src/ReversibleRandomGeneratorTests.cpp
+        )
 
 find_package(libautotest REQUIRED)
 

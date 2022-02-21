@@ -8,7 +8,7 @@ if (NOT TARGET trlang_src_module)
             trlang/functional/ptr_less.hpp
             trlang/functional/ptr_greater.hpp
             trlang/functional/optional.hpp
-            trlang/timers/ScopedTimer.hpp)
+            trlang/timers/ScopedTimer.hpp ../src/trlang/ReversibleRandomGenerator.cpp)
 
     target_include_directories(trlang_src_module
             PUBLIC ./)
