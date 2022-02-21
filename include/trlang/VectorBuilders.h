@@ -10,14 +10,16 @@ namespace trl
         return finalVector;
     }
 
-    template<class T, std::convertible_to<T> S>
+    template<class T, class S>
+        requires std::is_convertible_v<S, T>
     std::vector<T> combineVectors(std::vector<T> finalVector, const S & nextValue, auto&&... otherVectors)
     {
         finalVector.push_back(nextValue);
         return combineVectors(std::move(finalVector), std::forward<decltype(otherVectors)>(otherVectors)...);
     }
 
-    template<class T, std::convertible_to<T> S>
+    template<class T, class S>
+        requires std::is_convertible_v<S, T>
     std::vector<T> combineVectors(std::vector<T> finalVector, const std::vector<S>& nextVector, auto&&... otherVectors)
     {
         for (const T& value: nextVector)
