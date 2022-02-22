@@ -8,9 +8,9 @@
 const double DIVISOR = 2553;
 
 trl::ReversibleRandomGenerator::ReversibleRandomGenerator(unsigned int initialSeed)
-    : initialSeed_(initialSeed)
+    : initialSeed_(initialSeed == 0 ? 35894 : initialSeed)
 {
-    currentGenerator_ = std::sin(initialSeed * 1.0 / DIVISOR);
+    currentGenerator_ = std::sin(initialSeed_ * 1.0 / DIVISOR);
 }
 
 unsigned int trl::ReversibleRandomGenerator::next()
