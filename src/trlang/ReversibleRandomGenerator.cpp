@@ -5,37 +5,33 @@
 #include <trlang/ReversibleRandomGenerator.hpp>
 #include <cmath>
 
-const double DIVISOR = 2553;
+const double MULTIPLIER = 2553.589304;
 
 trl::ReversibleRandomGenerator::ReversibleRandomGenerator(unsigned int initialSeed)
     : initialSeed_(initialSeed == 0 ? 35894 : initialSeed)
 {
-    currentGenerator_ = std::sin(initialSeed_ * 1.0 / DIVISOR);
+    reset();
 }
 
 unsigned int trl::ReversibleRandomGenerator::next()
 {
-    unsigned int nextValue = std::floor(
-            (currentGenerator_ * std::pow(10, 10))
-                - (currentGenerator_ * std::pow(10, 4)));
+    unsigned int nextValue = (int)std::abs(currentGenerator_) % UINT32_MAX;
 
-    currentGenerator_ += std::sin(initialSeed_ * 1.0 / DIVISOR);
+    currentGenerator_ += std::tan(initialSeed_ * MULTIPLIER);
 
     return nextValue;
 }
 
 unsigned int trl::ReversibleRandomGenerator::previous()
 {
-    currentGenerator_ -= std::sin(initialSeed_ * 1.0 / DIVISOR);
+    currentGenerator_ -= std::tan(initialSeed_ * MULTIPLIER);
 
-    unsigned int previousValue = std::floor(
-            (currentGenerator_ * std::pow(10, 10))
-                - (currentGenerator_ * std::pow(10, 4)));
+    unsigned int previousValue = (int)std::abs(currentGenerator_) % UINT32_MAX;
 
     return previousValue;
 }
 
 void trl::ReversibleRandomGenerator::reset()
 {
-    currentGenerator_ = std::sin(initialSeed_ * 1.0 / DIVISOR);
+    currentGenerator_ = std::tan(initialSeed_ * MULTIPLIER);
 }
