@@ -17,12 +17,6 @@ namespace trl
 
         void reset();
     private:
-        union ValueGenerationCaster
-        {
-            double seedValue;
-            unsigned int randomValue;
-        };
-
         unsigned int initialSeed_;
         double currentGenerator_;
     };

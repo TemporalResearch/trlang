@@ -25,16 +25,6 @@ TEST_CASE("shouldReturnPreviousValue", "[ReversibleRandomGenerator]")
     REQUIRE(originalValue == gen.previous());
 }
 
-TEST_CASE("shouldReturnPreviousOnFirstTry", "[ReversibleRandomGenerator]")
-{
-    trl::ReversibleRandomGenerator gen(34);
-
-    auto originalValue = gen.next();
-    gen.next();
-    gen.previous();
-    REQUIRE(originalValue == gen.previous());
-}
-
 TEST_CASE("shouldResetToOriginalValue", "[ReversibleRandomGenerator]")
 {
     trl::ReversibleRandomGenerator gen(2434);
